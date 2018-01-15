@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name             = 'PredictiveTextField'
-s.version          = '0.1.0'
+s.version          = '0.1.1'
 s.summary          = 'Good UI for your users looking for some data.'
 s.homepage         = 'https://github.com/ronteq/PredictiveTextField'
 s.license          = { :type => 'MIT', :file => 'LICENSE' }

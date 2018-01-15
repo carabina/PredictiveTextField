@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PredictiveTextFieldDelegate: class{
+public protocol PredictiveTextFieldDelegate: class{
   func predictiveTextFieldTextDidChange(_ predictiveTextField: PredictiveTextField, text: String)
   func predictiveTextFieldModelDidSelect(_ predictiveTextField: PredictiveTextField, model: Any)
 }
@@ -39,7 +39,7 @@ public class PredictiveTextField: UIView{
   var heightConstraint: NSLayoutConstraint!
   var models: [Any] = []
   var searchValues: [String] = []
-  weak var delegate: PredictiveTextFieldDelegate?
+  public weak var delegate: PredictiveTextFieldDelegate?
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -108,7 +108,7 @@ extension PredictiveTextField{
 
 extension PredictiveTextField{
   
-  func updateSearchValues(models: [Any], valuesToShow: [String]){
+  public func updateSearchValues(models: [Any], valuesToShow: [String]){
     DispatchQueue.main.async {
       self.searchValues.removeAll()
       self.models = models
