@@ -13,7 +13,7 @@ protocol PredictiveTextFieldDelegate: class{
   func predictiveTextFieldModelDidSelect(_ predictiveTextField: PredictiveTextField, model: Any)
 }
 
-class PredictiveTextField: UIView{
+public class PredictiveTextField: UIView{
   
   private lazy var textField: UITextField = {
     let tf = UITextField()
@@ -36,9 +36,9 @@ class PredictiveTextField: UIView{
     return tv
   }()
   
-  private var heightConstraint: NSLayoutConstraint!
-  private var models: [Any] = []
-  private var searchValues: [String] = []
+  var heightConstraint: NSLayoutConstraint!
+  var models: [Any] = []
+  var searchValues: [String] = []
   weak var delegate: PredictiveTextFieldDelegate?
   
   override init(frame: CGRect) {
@@ -48,7 +48,7 @@ class PredictiveTextField: UIView{
     setupViews()
   }
   
-  required init?(coder aDecoder: NSCoder) {
+  required public init?(coder aDecoder: NSCoder) {
     fatalError("Error coder on PredictiveTextField")
   }
   
@@ -123,7 +123,7 @@ extension PredictiveTextField{
 
 extension PredictiveTextField{
   
-  private func updateHeight(isSearching: Bool){
+  func updateHeight(isSearching: Bool){
     if isSearching{
       heightConstraint.isActive = false
       heightConstraint.constant = ConstraintConstants.searchingHeight
@@ -149,7 +149,7 @@ extension PredictiveTextField{
 
 extension PredictiveTextField: UITextFieldDelegate{
   
-  func textFieldDidEndEditing(_ textField: UITextField) {
+  public func textFieldDidEndEditing(_ textField: UITextField) {
     updateHeight(isSearching: false)
   }
   
@@ -159,11 +159,11 @@ extension PredictiveTextField: UITextFieldDelegate{
 
 extension PredictiveTextField: UITableViewDelegate{
   
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+  public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 40
   }
   
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     delegate?.predictiveTextFieldModelDidSelect(self, model: models[indexPath.row])
   }
   
@@ -173,11 +173,11 @@ extension PredictiveTextField: UITableViewDelegate{
 
 extension PredictiveTextField: UITableViewDataSource{
   
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return searchValues.count
   }
   
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: PredictiveTextFieldCell.identifier, for: indexPath) as! PredictiveTextFieldCell
     cell.valueLabel.text = searchValues[indexPath.row]
     return cell
@@ -189,7 +189,7 @@ extension PredictiveTextField: UITableViewDataSource{
 
 extension PredictiveTextField{
   
-  private struct ConstraintConstants{
+  struct ConstraintConstants{
     static let defaultHeight: CGFloat = 44
     static let tableViewHeight: CGFloat = 150
     static let searchingHeight: CGFloat = ConstraintConstants.defaultHeight + ConstraintConstants.tableViewHeight
